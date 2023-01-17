@@ -1,7 +1,7 @@
 {
   "name": "zhuba-ts",
   "version": "1.0.0",
-  "description": "test driver learn typescript",
+  "description": " typescript",
   "main": "index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -27,7 +27,7 @@
   "tsd": {
     "directory": "test-dts",
     "compilerOptions": {
-      "strict": false,
+      "strict": true,
       "lib": [
         "esnext",
         "dom"
