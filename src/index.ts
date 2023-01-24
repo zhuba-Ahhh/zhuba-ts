@@ -21,5 +21,5 @@ export default function quickSort(arr: Array<number>): Array<number> {
   return quickSort(left).concat(current, quickSort(right));
 }
 
-const arr = [1, 2, 1, 2, 3, 4, 1, 2];
-console.log(quickSort(arr));
+// const arr = [1, 2, 1, 2, 3, 4, 1, 2];
+// console.log(quickSort(arr));
