@@ -22,6 +22,7 @@
   "homepage": "https://github.com/zhuba-Ahhh/zhuba-ts#readme",
   "dependencies": {
     "@type-challenges/utils": "^0.1.1",
+    "@types/node": "^18.11.18",
     "ts-node": "^10.9.1",
     "tsd": "^0.13.1"
   },
