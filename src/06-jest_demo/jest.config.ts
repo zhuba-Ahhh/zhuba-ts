@@ -4,6 +4,7 @@ export default {
     "^.+.(js|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
     "^.+.svg$": "<rootDir>/svg-transform.js",
   },
+  // 配置代理将此对象模拟为导入的 CSS 模块。
   moduleNameMapper: {
     // 有使用 sass 需求可换成 ^\.(css|less|sass|scss)$
     ".(css|less)$": "identity-obj-proxy",
