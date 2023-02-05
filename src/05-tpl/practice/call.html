@@ -1,0 +1,27 @@
+<script>
+  Function.prototype.customCall = function (context, ...args) {
+    if (context == null) {
+      context = globalThis
+    }
+    if (typeof context !== "object") {
+      context = new Object(context)
+    }
+
+    const fnKey = Symbol()
+    context[fnKey] = this
+
+    const res = context[fnKey](...args)
+
+    delete context[fnKey]
+
+    return res
+  }
+
+  const obj = {
+    name: "whl",
+    getName: function () {
+      console.log(this.name)
+    }
+  }
+  obj.getName.customCall({ name: "zhihui" })
+</script>

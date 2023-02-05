@@ -1,0 +1,32 @@
+<script>
+    // 函数科里化
+    function add(a, b, c) {
+        return a + b + c;
+    }
+
+    function curry(fn) {
+        // 函数参数个数
+        const fnLength = fn.length;
+
+        let args = []
+
+        function calc(...newArgs) {
+            args = [
+                ...args,
+                ...newArgs
+            ]
+
+            if (args.length < fnLength) {
+                return calc
+            } else {
+                return fn.apply(this, args.slice(0, fnLength))
+            }
+        }
+
+        return calc;
+    }
+
+    const fn = curry(add)
+    const value = fn(10)(20)(30)
+    console.info(value)
+</script>

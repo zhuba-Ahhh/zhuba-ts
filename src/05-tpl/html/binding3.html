@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue2.0 数据双向绑定</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="text">
+        hello world
+    </div>
+    <script>
+        function compile(node, vm) {
+            var reg = /\{\{(.*)\}\}/; // 匹配 {{ xxx }} 中的 xxx
+            // 如果是元素节点
+            if (node.nodeType === 1) {
+                var attr = node.attributes;
+                console.info("attr: ", attr);
+                // 解析元素节点的所有属性
+                for (let i = 0; i < attr.length; i++) {
+                    if (attr[i].nodeName == 'v-model') {
+                        var name = attr[i].nodeValue; // 看看是与哪一个数据相关
+
+                        node.addEventListener('input', function(e) {
+                            vm[name] = e.target.value;
+                        })
+
+                        node.value = vm[name]; // 将 data 的值赋给该 node
+                        node.removeAttribute('v-model');
+                    }
+                }
+            }
+            // 如果是文本节点
+            if (node.nodeType === 3) {
+                if (reg.test(node.nodeValue)) {
+                    var name = RegExp.$1; // 获取匹配到的字符串
+                    name = name.trim();
+                    // node.nodeValue = vm[name]; // 将 data 的值赋给该node
+
+                    new Wather(vm, node, name); // 不直接通过赋值的操作，而是通过绑定一个订阅者
+                }
+            }
+        }
+
+        function nodeToFragment(node, vm) {
+            var fragment = document.createDocumentFragment();
+            var child;
+            while (child = node.firstChild) {
+                compile(child, vm);
+                fragment.appendChild(child);
+            }
+            return fragment;
+        }
+
+        // Vue 构造函数
+        function Vue(options) {
+            this.data = options.data;
+            var data = this.data;
+
+            observe(data, this);
+            
+            var id = options.el;
+            var dom = nodeToFragment(document.getElementById(id), this)
+            // 处理完所有 dom 节点后，重新将内容添加回去
+            document.getElementById(id).appendChild(dom);
+        }
+
+        var vm = new Vue({
+            el: 'app',
+            data: {
+                text: 'hello world'
+            }
+        })
+
+        function defineReactive(obj, key, val) {
+            var dep = new Dep();
+            Object.defineProperty(obj, key, {
+                get: function() {
+                    if (Dep.target) {
+                        dep.addSub(Dep.target)
+                    }
+                    return val
+                },
+                set: function(newVal) {
+                    if (newVal === val) {
+                        return
+                    }
+                    val = newVal;
+                    console.info('新值: ', val);
+
+                    // 一旦更新立马通知
+                    dep.notify();
+                }
+            })
+        }
+        // 观察者函数
+        function observe(obj, vm) {
+            for (const key of Object.keys(obj)) {
+                defineReactive(vm, key, obj[key]);
+            }
+        }
+
+        // Watcher 构造函数
+        function Watcher(vm, node, name) {
+            Dep.target = this; // Dep.target 是一个全局变量
+            this.vm = vm;
+            this.node = node;
+            this.name = name;
+            this.update();
+            Dep.target = null;
+        }
+        Watcher.prototype = {
+            update() {
+                this.get();
+                this.node.nodeValue = this.value; // 注意，这里更改节点内容的关键
+            },
+            get() {
+                this.value = this.vm[this.name]; // 触发相应的 get
+            }
+        }
+
+        // Dep 构造函数
+        function Dep() {
+            this.subs = [];
+        }
+        Dep.prototype = {
+            addSub(sub) {
+                this.subs.push(sub);
+            },
+            notify() {
+                this.subs.forEach(function(sub) {
+                    sub.update();
+                })
+            }
+        }
+    </script>
+</body>
+</html>

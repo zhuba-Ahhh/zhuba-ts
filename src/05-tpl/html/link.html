@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>构造函数和原型的重名属性</title>
+</head>
+<body>
+    <script>
+        function Foo() {
+            Foo.a = function() { console.info(1) }
+            this.a = function() { console.info(2) }
+        }
+
+        Foo.prototype.a = function() { console.info(3) }
+        Foo.prototype.b = function() { console.info(100) }
+
+        Foo.a = function() { console.info(4) }
+
+        Foo.a()
+        let obj = new Foo()
+        obj.a()
+        obj.b()
+        Foo.a()
+    </script>
+</body>
+</html>

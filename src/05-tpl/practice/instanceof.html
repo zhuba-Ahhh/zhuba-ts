@@ -1,0 +1,26 @@
+<script>
+    function myInstanceof(instance, origin) {
+        if (instance == null) return false // null undefined
+
+        const type = typeof instance
+        if (type !== "object" && type !== "function") {
+            // 值类型
+            return false
+        }
+
+        let tempInstance = instance
+        while (tempInstance) {
+            if (tempInstance.__proto__ === origin.prototype) {
+                return true
+            }
+
+            tempInstance = tempInstance.__proto__
+        }
+        return false
+    }
+
+    console.info(myInstanceof(100, Number))
+    console.info(myInstanceof([], Array))
+    console.info(myInstanceof([], Object))
+    console.info(myInstanceof({}, Object))
+</script>

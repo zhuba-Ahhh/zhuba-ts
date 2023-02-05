@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VueDiff算法</title>
+</head>
+
+<body>
+  <div class="wrapper">hello world!</div>
+  <script>
+    class VNode {
+      key; // 唯一的key值
+      isStatic; // vue3中标记的是否是静态节点
+      componentInstance; // 如果是组件的话，该属性代表组件实例
+
+      // tag 该虚拟dom的类型
+      // children 该虚拟dom的子节点，每个子节点又是一个新的虚拟dom
+      // text 改虚拟dom的文本
+      // elm 该虚拟dom对应的真实dom
+      // parent 该虚拟dom的父级节点
+      // data 该虚拟节点的一些属性信息，比如 class、props、styles
+      constructor(tag, children, text, elm, parent, data) {
+        this.tag = tag;
+        this.children = children;
+        this.text = text;
+        this.elm = elm;
+        this.parent = parent;
+        this.data = data;
+      }
+    }
+
+    function patch(oldNode, vNode) {
+      // 1. 首先，如果 oldNode 有值，新的没有了，那就直接移除
+      if (isDef(oldNode) && isUndef(vNode)) {
+        oldNode.elm && oldNode.remove()
+      }
+      // 2. 如果旧节点没有定义，新节点有值，那就直接创建
+      if (isDef(vNode) && isUndef(oldNode)) {
+        // oldNode.parent
+      }
+    }
+    function isDef(vNode) {
+      return vNode !== undefined && vNode !== null;
+    }
+    function isUndef(vNode) {
+      return vNode === undefined || vNode === null;
+    }
+
+    const div = new VNode(
+      "div",
+      [],
+      null,
+      document.createElement("div"),
+      null,
+      {
+        attrs: {
+          class: "wrapper"
+        }
+      }
+    );
+    const text = new VNode(
+      "text",
+      [],
+      "hello world!",
+      document.createTextNode("hello world!"),
+      div,
+      {}
+    );
+    div.children.push(text);
+
+    console.info("div", div);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function createPromise(val) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(val)
+        }, 1000)
+    })
+}
+
+(function() {
+  	const p1 = createPromise(100)
+    const p2 = createPromise(200)
+    const p3 = createPromise(300)
+
+    const list = [p1, p2, p3]
+
+    // Promise.all(list).then(res => console.log(res)) // [100, 200, 300]
+
+    for (let res of list) {
+        console.log(res.then(re=>{
+            console.log(re)
+        })) // 100 200 300
+    }  
+})()
+    </script>
+</body>
+</html>

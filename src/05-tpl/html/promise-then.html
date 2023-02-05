@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise-then执行顺序</title>
+</head>
+<body>
+    <p>promise then 执行顺序问题</p>
+    <script>
+        Promise.resolve().then(() => {
+            console.info(0)
+            return Promise.resolve(4)
+        }).then(res => {
+            console.info(res)
+        })
+
+        Promise.resolve().then(() => {
+            console.info(1)
+        }).then(() => {
+            console.info(2)
+        }).then(() => {
+            console.info(3)
+        }).then(() => {
+            console.info(5)
+        }).then(() => {
+            console.info(6)
+        })
+
+        Promise.resolve().then(() => {
+            console.info(10)
+        }).then(() => {
+            console.info(20)
+        }).then(() => {
+            console.info(30)
+        }).then(() => {
+            console.info(50)
+        }).then(() => {
+            console.info(60)
+        })
+
+        Promise.resolve().then(() => {
+            console.info(100)
+        }).then(() => {
+            console.info(200)
+        }).then(() => {
+            console.info(300)
+        })
+
+        // 0 1 2 3 5 6 4
+    </script>
+</body>
+</html>

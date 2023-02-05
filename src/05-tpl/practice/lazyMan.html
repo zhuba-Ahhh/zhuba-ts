@@ -1,0 +1,45 @@
+<script>
+    class LazyMan {
+        name;
+        tasks = [];
+
+        constructor(name) {
+            this.name = name
+
+            setTimeout(() => {
+                this.next()
+            })
+        }
+
+        next() {
+            const task = this.tasks.shift()
+            task && task()
+        }
+
+        eat(k) {
+            const task = () => {
+                console.info(`${this.name} eat ${k}`)
+                this.next()
+            }
+            this.tasks.push(task)
+
+            return this
+        }
+
+        sleep(seconds) {
+            const task = () => {
+                console.info(`${this.name}开始睡觉了`)
+                setTimeout(() => {
+                    console.info(`${this.name}睡了${seconds}秒，开始执行下一个任务`)
+                    this.next()
+                }, seconds * 1000)
+            }
+            this.tasks.push(task)
+
+            return this
+        }
+    }
+
+    const me = new LazyMan("zhihui")
+    me.eat("苹果").eat("菠萝").sleep(2).eat("西瓜").sleep(2).eat("芒果")
+</script>

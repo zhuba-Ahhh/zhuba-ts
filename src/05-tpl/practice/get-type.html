@@ -1,0 +1,13 @@
+<script>
+    function getType(param) {
+        const originType = Object.prototype.toString.call(param)
+        const spaceIndex = originType.indexOf(" ")
+        const type = originType.slice(spaceIndex + 1, -1)
+        return type.toLowerCase()
+    }
+
+    console.info("1", getType(1))
+    console.info("'a'", getType('a'))
+    console.info("fun", getType(function fn() {}))
+    console.info("[]", getType([]))
+</script>

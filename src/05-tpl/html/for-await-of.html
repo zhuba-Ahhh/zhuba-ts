@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for-await-of</title>
+</head>
+<body>
+    <script>
+        function createPromise(val) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve(val)
+                }, 1000)
+            })
+        }
+
+        
+        
+        (async function() {
+            const p1 = await createPromise(100)
+            console.log(p1);
+            const p2 = await createPromise(200)
+            console.log(p2);
+            const p3 = await createPromise(300)
+            console.log(p3);
+    
+            // const res1 = await p1
+            // console.log(res1);
+            // const res2 = await p2
+            // console.log(res2);
+            // const res3 = await p3
+            // console.log(res3);
+            // const list = [p1, p2, p3]
+            // // Promise.all(list).then(res => console.log(res))
+            // for await (let res of list) {
+            //     console.log(res);
+            // }
+        })()
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<script>
+  // context 是 bind 时传入的 this
+  // bindArgs 是 bind 时传入的参数
+  Function.prototype.customBind = function (context, ...bindArgs) {
+    const self = this
+
+    console.info(`out this ${this}`)
+
+    return function (...args) {
+      const newArgs = bindArgs.concat(args)
+      console.info(`inner this ${this}`)
+      return self.apply(context, newArgs)
+    }
+  }
+
+  const fn = function (a, b, c) {
+    console.info(a, b, c)
+  }
+
+  const f = fn.customBind({ x: 100 }, 10)
+  f(20, 30)
+
+
+  function fun(name) {
+    console.info(`name ${name}`)
+    console.info(this)
+  }
+  fun(1234)
+</script>

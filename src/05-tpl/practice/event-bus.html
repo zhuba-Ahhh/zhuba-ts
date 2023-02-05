@@ -1,0 +1,62 @@
+<script>
+    class EventBus {
+        events;
+
+        constructor() {
+            this.events = {}
+        }
+
+        on(type, fn, isOnce = false) {
+            const fnList = this.events[type]
+
+            if (fnList == null) {
+                this.events[type] = []
+            }
+            this.events[type].push({ fn, isOnce })
+        }
+
+        once(type, fn) {
+            this.on(type, fn, true)
+        }
+
+        off (type, fn) {
+            if (fn == null) {
+                this.events[type] = []
+            } else {
+                const fnList = this.events[type]
+                if (fnList) {
+                    this.events[type] = fnList.filter(item => fn !== item.fn)
+                }
+            }
+        }
+
+        emit(type, ...args) {
+            const fnList = this.events[type]
+            if (fnList == null) return
+
+            this.events[type] = fnList.filter(item => {
+                const { fn, isOnce } = item
+                fn(...args)
+
+                return !isOnce
+            })
+        }
+    }
+
+    const e = new EventBus()
+
+    function fn1(a, b) { console.info('fn1', a, b) }
+    function fn2(a, b) { console.info('fn2', a, b) }
+    function fn3(a, b) { console.info('fn3', a, b) }
+
+    e.on('key1', fn1)
+    e.on('key1', fn2)
+    e.once('key1', fn3)
+    e.on('xxxxxx', fn1)
+
+    e.emit('key1', 10, 20)
+
+    e.off('key1', fn1)
+
+    e.emit('key1', 100, 200)
+</script>

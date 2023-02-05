@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeakMap WeakSet</title>
+</head>
+<body>
+    <p>WeakMap WeakSet 弱引用</p>
+    <script>
+        // const data = {}
+        // const map = new Map()
+        const wMap = new WeakMap()
+        function fn() {
+            const obj = { x: 100 }
+            // data.obj = obj
+            // map.set("o", obj)
+            wMap.set(obj, 100)
+            console.log(wMap.get(obj));
+        }
+
+        fn()
+        
+        // console.log("data", data);
+        // console.log("map", map);
+        console.log("wMap", wMap);
+        wMap.get({ x: 100 })
+    </script>
+</body>
+</html>

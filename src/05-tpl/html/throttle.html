@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>throttle</title>
+</head>
+<body>
+    <div id="div1" draggable="true" style="width: 100px; height: 50px; background-color: blueviolet; padding: 20px;">可拖拽</div>
+    <script>
+        function throttle(fn, interval = 100) {
+            let timer = null
+            return function() {
+                if (timer) return
+                timer = setTimeout(() => {
+                    fn.apply(this, arguments)
+                    timer = null
+                }, interval)
+            }
+        }
+        const div1 = document.getElementById("div1")
+        div1.addEventListener("drag", throttle(e => {
+            console.log("鼠标位置", e.offsetX, e.offsetY);
+        }))
+    </script>
+</body>
+</html>

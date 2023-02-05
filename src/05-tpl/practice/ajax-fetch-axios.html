@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajax-Fetch-Axios三者的区别</title>
+</head>
+
+<body>
+  <ul>
+    <li>Ajax是一种技术统称</li>
+    <li>Fetch是一个具体的API，浏览器原生API，和XHRHttpRequest一个级别，语法更简洁、易用，支持Promise</li>
+    <li>Axios是第三方库，内部可用XMLHttpRequest和Fetch实现</li>
+  </ul>
+  <script>
+    // 用 XMLHttpRequest 实现 ajax
+    // 简洁版
+    function ajax1(url, successFn) {
+      const xhr = new XMLHttpRequest()
+      xhr.open('GET', url, false) // 第三个参数 false：同步，true：异步
+      xhr.onreadychanged = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) { }
+          successFn(xhr.responseText)
+        }
+      }
+      xhr.send(null) // 如果为 POST 方法，传参为键值对的方式 username=whl
+    }
+
+    function ajax2(method, url, headers = [], body) {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest()
+        request.open(method, url)
+        for (let key in headers) {
+          // 设置 http 请求头必须在open之后
+          request.setRequestHeader(key, headers[key])
+        }
+
+        request.onreadychange = function () {
+          if (request.readyState === 4) {
+            if (request.state === 200) {
+              resolve(request.responseText)
+            } else {
+              reject(request)
+            }
+          }
+        }
+        request.send(body)
+      })
+    }
+  </script>
+</body>
+
+</html>

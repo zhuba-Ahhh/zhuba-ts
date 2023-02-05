@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New</title>
+</head>
+<body>
+    <script>
+        class Foo {
+            name;
+            age;
+            city;
+    
+            constructor(name, age, city) {
+                this.name = name;
+                this.age = age;
+                this.city = city;
+            }
+    
+            getName() {
+                return this.name
+            }
+        }
+    
+        function createNew(constructor, ...args) {
+            // 创建一个空对象，并继承构造函数的原型
+            const obj = Object.create(constructor.prototype);
+            // 并将创建的对象作为 this 执行构造函数
+            constructor.call(obj, ...args)
+            // 返回obj
+            return obj;
+        }
+    
+        const f = createNew(Foo, "zhihui", "zhengzhou", 28)
+        console.info(f)
+    </script>
+</body>
+</html>

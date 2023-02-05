@@ -1,0 +1,66 @@
+<script>
+    function cloneDeep(obj, map = new WeakMap()) {
+        if (typeof obj !== 'object' || obj == null) return obj
+
+        const objFromMap = map.get(obj)
+        if (objFromMap) return objFromMap
+
+        let target = {}
+        map.set(obj, target)
+
+        // Map
+        if (obj instanceof Map) {
+            target = new Map
+            obj.forEach((v, k) => {
+                const v1 = cloneDeep(v, map)
+                const k1 = cloneDeep(k, map)
+                target.set(k1, v1)
+            })
+        }
+
+        // Set
+        if (obj instanceof Set) {
+            target = new Set()
+            obj.forEach(v => {
+                target.add(cloneDeep(v, map))
+            })
+        }
+
+        // Array
+        if (obj instanceof Array) {
+            target = obj.map(v => cloneDeep(v, map))
+        }
+
+        // RegExp
+        if (obj instanceof RegExp) {
+            target = obj
+        }
+
+        // Object
+        for (let key in obj) {
+            target[key] = cloneDeep(obj[key], map)
+        }
+
+        return target
+    }
+
+    const obj = {
+        map: new Map(),
+        set: new Set(),
+        fun: function() {
+            console.info(this.info.name)
+        },
+        info: {
+            name: "zhihui"
+        },
+        reg: /[0-9]/g
+    }
+
+    obj.self = obj
+
+    const newObj = cloneDeep(obj)
+
+    newObj.fun()
+    console.info('obj', obj)
+    console.info('newObj', newObj)
+</script>

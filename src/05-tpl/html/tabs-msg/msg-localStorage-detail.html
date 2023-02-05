@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>detail</title>
+</head>
+<body>
+    <p>localStorage message - detail page</p>
+    <button id="btn1">修改标题</button>
+
+    <script>
+        const btn = document.getElementById("btn1")
+        btn.addEventListener("click", () => {
+            const newInfo = {
+                id: 100,
+                name: "标题" + Date.now()
+            }
+            localStorage.setItem("changeIndo", JSON.stringify(newInfo))
+        })
+    </script>
+</body>
+</html>

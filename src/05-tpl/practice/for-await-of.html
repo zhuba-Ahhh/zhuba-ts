@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for await of</title>
+</head>
+<body>
+    <p>异步迭代器(for-await-of)：循环等待每个 Promise 对象变为 resolved 状态才进入下一步</p>
+    <script>
+        function Gen(time) {
+            return new Promise(function(resolve, reject) {
+                setTimeout(function() {
+                    // if (time < 1000) {
+                    //     reject(time)
+                    // } else {
+                    //     resolve(time)
+                    // }
+                    resolve(time)
+                }, time)
+            })
+        }
+        async function test() {
+            let arr = [Gen(2000), Gen(100), Gen(3000)]
+            for (let item of arr) {
+                console.log(Date.now(), item.then(console.log))
+            }
+        }
+
+        test()
+    </script>
+</body>
+</html>

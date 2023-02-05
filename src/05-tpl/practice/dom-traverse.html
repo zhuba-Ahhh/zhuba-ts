@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度/广度 优先遍历DOM树</title>
+</head>
+<body>
+    <div id="box">
+        <p>hello <b>world</b></p>
+        <img src="https://www.baidu.com/img/flexible/logo/pc/result.png" />
+        <!-- 注释 -->
+        <ul>
+            <li>a</li>
+            <li>b</li>
+        </ul>
+    </div>
+    <script>
+        function visitNode(n) {
+            if (n instanceof Comment) {
+                // 注释
+                console.info("Comment node----", n.textContent)
+            }
+            if (n instanceof Text) {
+                // 文本
+
+                const t = n.textContent?.trim()
+                if (t) {
+                    console.info("Text node----", n.textContent?.trim())
+                }
+            }
+            if (n instanceof HTMLElement) {
+                // element
+                console.info("Element node----", `<${n.tagName.toLowerCase()}>`)
+            }
+        }
+
+        // 深度优先遍历
+        function depthFirstTraverse1(root) {
+            visitNode(root)
+
+            const childNodes = root.childNodes // .childNodes 和 .children的去呗
+
+            if (childNodes.length) {
+                childNodes.forEach(child => {
+                    depthFirstTraverse1(child)
+                })
+            }
+        }
+        function depthFirstTraverse2(root) {
+            const stack = []
+            stack.push(root)
+
+            while (stack.length > 0) {
+                const curNode = stack.pop()
+                if (curNode == null) break;
+
+                visitNode(curNode)
+
+                const childNodes = curNode.childNodes
+                if (childNodes.length) {
+                    Array.from(childNodes).reverse().forEach(child => stack.push(child))
+                }
+            }
+        }
+
+        // 广度优先遍历
+        function breadthFirstTraverse(root) {
+            const queue = []
+            queue.unshift(root)
+
+            while(queue.length) {
+                const curNode = queue.pop()
+                if (curNode == null) break;
+
+                visitNode(curNode)
+
+                const childNodes = curNode.childNodes
+                if (childNodes.length) {
+                    childNodes.forEach(child => queue.unshift(child))
+                }
+            }
+        }
+
+        const box = document.getElementById("box")
+        depthFirstTraverse1(box)
+        console.info("----------------------")
+        depthFirstTraverse2(box)
+    </script>
+</body>
+</html>

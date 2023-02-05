@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>node element</title>
+</head>
+<body>
+    <!-- <p id="p1"><b>node</b> vs <em>element</em>注释</p> -->
+    <p id="p1">p1</p>
+    <p id="p2">p2</p>
+    <script>
+        const htmlList = document.getElementsByTagName("*")
+        const nodeList = document.querySelectorAll("*")
+
+        console.log("htmlList: ", htmlList);
+        console.log(htmlList.p1, htmlList.p2);
+        console.log("nodeList: ", nodeList);
+        console.log(nodeList.p1, nodeList.p2);
+
+        // const p1 = document.getElementById("p1")
+
+        // // class Node {}
+
+        // // // document
+        // // class Document extends Node {}
+        // // class DocumentFragment extends Node {}
+
+        // // // 文本和注释
+        // // class CharacterData extends Node {}
+        // // class Text extends CharacterData {}
+        // // class Comment extends CharacterData {}
+
+        // // // element
+        // // class Element extends Node {}
+        // // class HTMLElement extends Element {}
+        // // class HTMLDivElement extends HTMLElement {}
+        // // class HTMLInputElement extends ElemHTMLElementent {}
+        // // // ...
+
+        // console.log(p1.children);
+        // console.log(p1.childNodes);
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC</title>
+</head>
+<body>
+    <p>Garbage collection</p>
+    <script>
+        function fn() {
+            const a = 'aa'
+            console.log(a);
+
+            const obj = { x: 100 }
+            console.log(obj);
+        }
+
+        fn()
+
+        // 垃圾回收
+    </script>
+</body>
+</html>
