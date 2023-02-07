@@ -21,5 +21,5 @@ function fn(this: any, a: any, b: any, c: any) {
 }
 
 // @ts-ignore
-const fn1 = fn.MyBind({ x: 100 }, 10);
-fn1(20, 30);
+// const fn1 = fn.MyBind({ x: 100 }, 10);
+// fn1(20, 30);
