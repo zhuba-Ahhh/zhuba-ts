@@ -1,4 +1,4 @@
-name: Bear-UI Pnpm
+name: Pnpm
 
 on:
   push:
@@ -20,5 +20,3 @@ jobs:
         run: pnpm install
       - name: Jest
         run: pnpm jest
-      # - name: Serve Docs
-      #   run: pnpm docs:serve
